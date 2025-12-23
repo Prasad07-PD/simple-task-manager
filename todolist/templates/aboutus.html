@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %} About Us {% endblock %}
+
+{% block content %}
+
+<style>
+    .about-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .about-container h1 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .about-container h2 {
+        font-size: 2rem;
+        color: #3498db;
+        margin-bottom: 20px;
+    }
+
+    .about-container p {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.6;
+        margin: 0 auto;
+    }
+
+    .highlight {
+        color: #e67e22;
+        font-weight: bold;
+    }
+    body {
+        background: #f4f7f9;
+    }
+</style>
+
+<div class="about-container">
+    <h1>Welcome {{ name }}</h1>
+    <h2>About Us</h2>
+    <p>
+        The <span class="highlight">ToDoManager App</span> helps users organize tasks efficiently. 
+        Our mission is to make productivity <span class="highlight">simple</span> and <span class="highlight">enjoyable</span>!
+    </p>
+</div>
+
+{% endblock %}

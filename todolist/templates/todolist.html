@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Page{% endblock %}
+
+{% block content %}
+
+<br>
+{% if messages %}
+  {% for message in messages %}
+    {{ message }}
+  {% endfor %}
+{% endif %}
+</br>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f8fc;
+  }
+
+  h1, h2 {
+    text-align: center;
+  }
+
+  h1 {
+    margin: 40px 0 10px;
+    color: #333;
+  }
+
+  h2 {
+    margin-top: 30px;
+    color: #555;
+  }
+
+  table {
+    margin: 30px auto;
+    width: 60%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .add-task-container {
+    margin: 40px auto;
+    text-align: center;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 40%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .add-task-container input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+  }
+
+  .add-task-container input:focus {
+    border-color: #4CAF50;
+  }
+
+  .add-task-container button {
+    margin-top: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  .add-task-container button:hover {
+    background-color: #45a049;
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 60px 0 0;
+  }
+
+  .pagination {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .pagination li a {
+    padding: 6px 12px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .pagination li a:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .pagination .disabled a {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+  }
+
+  .complete-btn {
+    background-color: #4CAF50;
+  }
+  .complete-btn:hover {
+    background-color: #45a049;
+  }
+
+  .pending-btn {
+    background-color: #ff9800;
+  }
+  .pending-btn:hover {
+    background-color: #e68a00;
+  }
+
+  .edit-btn {
+    background-color: #2196F3;
+  }
+  .edit-btn:hover {
+    background-color: #0b7dda;
+  }
+
+  .delete-btn {
+    background-color: #f44336;
+  }
+  .delete-btn:hover {
+    background-color: #d32f2f;
+  }
+</style>
+
+<h2>Task Listed:</h2>
+
+<table>
+  <tr>
+    <th>Task Name</th>
+    <th>Status</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+
+  {% for task in all_tasks %}
+  <tr>
+    <td> {{task.id}} | {{ task.task }} </td>
+
+    <td>
+      {% if task.is_completed %}
+        <a class="btn pending-btn" href="{% url 'pending_task' task.id %}">Mark as Pending</a>
+      {% else %}
+        <a class="btn complete-btn" href="{% url 'complete_task' task.id %}">Mark as Complete</a>
+      {% endif %}
+    </td>
+
+    <td>
+      <a class="btn edit-btn" href="{% url 'edit_task' task.id %}">Edit</a>
+    </td>
+
+    <td>
+      <a class="btn delete-btn" href="{% url 'delete_task' task.id %}">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="4">No tasks yet.</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div class="pagination-container">
+  <ul class="pagination">
+    <li><a href="#">Previous</a></li>
+    <li><a href="?page=1">1</a></li>
+    <li><a href="?page=2">2</a></li>
+    <li><a href="?page=3">3</a></li>
+    <li><a href="#">Next</a></li>
+  </ul>
+</div>
+
+<!-- Add Task Form -->
+<div class="add-task-container">
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="task" placeholder="Enter new task..." required>
+    <br>
+    <button type="submit">➕ Add Task</button>
+  </form>
+</div>
+
+{% endblock %}
