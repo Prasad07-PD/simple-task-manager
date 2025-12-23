@@ -9,5 +9,4 @@ urlpatterns = [
     
 ]
 
-# ✅ correct way to serve static files in DEBUG
 urlpatterns += staticfiles_urlpatterns()
